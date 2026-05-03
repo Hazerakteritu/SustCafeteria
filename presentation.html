@@ -1,0 +1,741 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SustCafeteria - Professional Presentation</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+        }
+
+        .slide {
+            width: 100vw;
+            height: 100vh;
+            display: none;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 60px;
+            page-break-after: always;
+            position: relative;
+        }
+
+        .slide.active {
+            display: flex;
+        }
+
+        /* Color Scheme */
+        .slide-title {
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            color: white;
+        }
+
+        .slide-content {
+            background: #f8f9fa;
+        }
+
+        .slide-accent {
+            background: white;
+        }
+
+        .slide-dark {
+            background: #2c3e50;
+            color: white;
+        }
+
+        /* Title Slide */
+        .title-slide {
+            text-align: center;
+            justify-content: space-between;
+        }
+
+        .title-content h1 {
+            font-size: 72px;
+            font-weight: 700;
+            margin-bottom: 20px;
+            color: white;
+        }
+
+        .title-content p {
+            font-size: 24px;
+            color: rgba(255, 255, 255, 0.9);
+            margin-bottom: 40px;
+        }
+
+        .slide-number {
+            position: absolute;
+            bottom: 30px;
+            right: 40px;
+            font-size: 16px;
+            opacity: 0.7;
+        }
+
+        /* Content Slides */
+        .slide-content h2 {
+            font-size: 48px;
+            color: #1e3c72;
+            margin-bottom: 40px;
+            border-bottom: 4px solid #2a5298;
+            padding-bottom: 20px;
+            display: inline-block;
+        }
+
+        .slide-content h3 {
+            font-size: 32px;
+            color: #1e3c72;
+            margin-bottom: 20px;
+        }
+
+        .content-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            width: 100%;
+            max-width: 1200px;
+        }
+
+        .content-item {
+            padding: 30px;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .content-item h4 {
+            font-size: 22px;
+            color: #2a5298;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .content-item p {
+            font-size: 16px;
+            color: #555;
+            line-height: 1.8;
+        }
+
+        .icon {
+            font-size: 28px;
+        }
+
+        /* Features Grid */
+        .features-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 20px;
+            width: 100%;
+        }
+
+        .feature-card {
+            background: white;
+            padding: 25px;
+            border-radius: 8px;
+            text-align: center;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            border-top: 4px solid #2a5298;
+        }
+
+        .feature-card h4 {
+            font-size: 18px;
+            color: #1e3c72;
+            margin-bottom: 10px;
+        }
+
+        .feature-card p {
+            font-size: 14px;
+            color: #666;
+        }
+
+        /* User Roles Section */
+        .roles-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 30px;
+            width: 100%;
+            max-width: 1300px;
+        }
+
+        .role-card {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            border-left: 5px solid #2a5298;
+        }
+
+        .role-header {
+            font-size: 28px;
+            color: #1e3c72;
+            margin-bottom: 15px;
+            font-weight: 600;
+        }
+
+        .role-icon {
+            font-size: 48px;
+            margin-bottom: 15px;
+        }
+
+        .role-card ul {
+            list-style: none;
+            margin-top: 15px;
+        }
+
+        .role-card li {
+            font-size: 15px;
+            color: #555;
+            padding: 8px 0;
+            padding-left: 25px;
+            position: relative;
+        }
+
+        .role-card li:before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: #2a5298;
+            font-weight: bold;
+            font-size: 18px;
+        }
+
+        /* Tech Stack */
+        .tech-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            width: 100%;
+            max-width: 1000px;
+        }
+
+        .tech-column h4 {
+            font-size: 24px;
+            color: #1e3c72;
+            margin-bottom: 20px;
+            font-weight: 600;
+        }
+
+        .tech-item {
+            background: white;
+            padding: 15px;
+            margin-bottom: 10px;
+            border-radius: 6px;
+            font-size: 16px;
+            color: #555;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+        }
+
+        /* Key Features */
+        .key-feature {
+            background: white;
+            padding: 20px;
+            margin-bottom: 15px;
+            border-radius: 6px;
+            display: flex;
+            align-items: flex-start;
+            gap: 15px;
+        }
+
+        .feature-number {
+            background: #2a5298;
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            flex-shrink: 0;
+        }
+
+        .feature-text h4 {
+            color: #1e3c72;
+            margin-bottom: 5px;
+            font-size: 16px;
+        }
+
+        .feature-text p {
+            color: #666;
+            font-size: 14px;
+        }
+
+        /* Dark Slide */
+        .slide-dark h2 {
+            color: white;
+            border-color: #5eb3d6;
+        }
+
+        .slide-dark .content-item {
+            background: rgba(255, 255, 255, 0.95);
+            color: #333;
+        }
+
+        /* Controls */
+        .controls {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 20px;
+            z-index: 100;
+        }
+
+        button {
+            padding: 12px 24px;
+            font-size: 14px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .btn-prev, .btn-next {
+            background: #2a5298;
+            color: white;
+        }
+
+        .btn-prev:hover, .btn-next:hover {
+            background: #1e3c72;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(42, 82, 152, 0.3);
+        }
+
+        .btn-print {
+            background: #27ae60;
+            color: white;
+        }
+
+        .btn-print:hover {
+            background: #1e8449;
+        }
+
+        .slide-indicator {
+            position: fixed;
+            top: 20px;
+            right: 40px;
+            font-size: 16px;
+            color: #1e3c72;
+            font-weight: 600;
+        }
+
+        /* Print Styles */
+        @media print {
+            .controls, .slide-indicator {
+                display: none;
+            }
+
+            .slide {
+                display: flex !important;
+                page-break-after: always;
+            }
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .slide {
+                padding: 40px;
+            }
+
+            .content-container, .roles-container {
+                grid-template-columns: 1fr;
+            }
+
+            .features-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        .centered-content {
+            max-width: 900px;
+            width: 100%;
+        }
+
+        .benefits-list {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            width: 100%;
+            max-width: 800px;
+        }
+    </style>
+</head>
+<body>
+
+<!-- Slide 1: Title Slide -->
+<div class="slide slide-title active">
+    <div class="title-content">
+        <h1>SustCafeteria</h1>
+        <p>Sustainable Cafeteria Management System</p>
+        <p style="font-size: 18px; margin-top: 60px; opacity: 0.8;">Professional Solution for Modern Cafeteria Operations</p>
+    </div>
+    <div style="text-align: center; opacity: 0.8; font-size: 16px;">
+        <p>Course Presentation | 350</p>
+    </div>
+    <div class="slide-number">1</div>
+</div>
+
+<!-- Slide 2: Project Overview -->
+<div class="slide slide-content">
+    <h2>Project Overview</h2>
+    <div class="content-container">
+        <div class="content-item">
+            <h4><span class="icon">🎯</span>Purpose</h4>
+            <p>A comprehensive web-based solution designed to streamline cafeteria operations, manage inventory efficiently, and provide real-time insights into sales and staff management.</p>
+        </div>
+        <div class="content-item">
+            <h4><span class="icon">💡</span>Key Innovation</h4>
+            <p>Integrates inventory management, order tracking, and staff coordination into a single, user-friendly platform tailored for cafeteria operations.</p>
+        </div>
+        <div class="content-item">
+            <h4><span class="icon">👥</span>Target Users</h4>
+            <p>Cafeteria managers, cashiers, kitchen staff, and administrative personnel who require efficient tools for daily operations.</p>
+        </div>
+        <div class="content-item">
+            <h4><span class="icon">📊</span>Business Value</h4>
+            <p>Reduces operational costs, minimizes food waste, improves service efficiency, and provides actionable business insights.</p>
+        </div>
+    </div>
+    <div class="slide-number">2</div>
+</div>
+
+<!-- Slide 3: Core Features -->
+<div class="slide slide-content">
+    <h2>Core Features</h2>
+    <div class="features-grid">
+        <div class="feature-card">
+            <h4>📦 Inventory Management</h4>
+            <p>Real-time tracking of stock levels with automatic low-stock alerts and waste monitoring</p>
+        </div>
+        <div class="feature-card">
+            <h4>🍽️ Menu Management</h4>
+            <p>Easy creation and updates of daily menus with pricing and nutritional information</p>
+        </div>
+        <div class="feature-card">
+            <h4>🛒 Order Processing</h4>
+            <p>Streamlined order management and fulfillment tracking from customers to kitchen</p>
+        </div>
+        <div class="feature-card">
+            <h4>👔 Staff Management</h4>
+            <p>Attendance tracking, role management, and staff performance monitoring</p>
+        </div>
+        <div class="feature-card">
+            <h4>🤝 Supplier Management</h4>
+            <p>Vendor database, purchase order creation, and supplier performance tracking</p>
+        </div>
+        <div class="feature-card">
+            <h4>📈 Sales & Reports</h4>
+            <p>Comprehensive sales analytics, financial reports, and business insights</p>
+        </div>
+    </div>
+    <div class="slide-number">3</div>
+</div>
+
+<!-- Slide 4: User Roles & Features -->
+<div class="slide slide-content">
+    <h2>User Roles & Features</h2>
+    <div class="roles-container">
+        <div class="role-card">
+            <div class="role-icon">👨‍💼</div>
+            <div class="role-header">Manager</div>
+            <p style="color: #888; margin-bottom: 15px; font-size: 14px;">Full system administration</p>
+            <ul>
+                <li>Complete inventory control</li>
+                <li>Menu creation & pricing</li>
+                <li>Staff management</li>
+                <li>Supplier agreements</li>
+                <li>Sales reports</li>
+                <li>Budget tracking</li>
+                <li>System settings</li>
+            </ul>
+        </div>
+
+        <div class="role-card">
+            <div class="role-icon">💳</div>
+            <div class="role-header">Cashier</div>
+            <p style="color: #888; margin-bottom: 15px; font-size: 14px;">Point of sale operations</p>
+            <ul>
+                <li>Process orders</li>
+                <li>View menu items</li>
+                <li>Check inventory</li>
+                <li>Accept payments</li>
+                <li>View pricing</li>
+                <li>Handle refunds</li>
+                <li>Daily reports</li>
+            </ul>
+        </div>
+
+        <div class="role-card">
+            <div class="role-icon">👨‍🍳</div>
+            <div class="role-header">Kitchen Staff</div>
+            <p style="color: #888; margin-bottom: 15px; font-size: 14px;">Food preparation</p>
+            <ul>
+                <li>View orders</li>
+                <li>Check inventory</li>
+                <li>Track stock usage</li>
+                <li>Mark items ready</li>
+                <li>Update status</li>
+                <li>Request supplies</li>
+            </ul>
+        </div>
+    </div>
+    <div class="slide-number">4</div>
+</div>
+
+<!-- Slide 5: Technical Architecture -->
+<div class="slide slide-content">
+    <h2>Technology Stack</h2>
+    <div class="tech-grid">
+        <div>
+            <h4>Frontend</h4>
+            <div class="tech-item">React 19.2.0</div>
+            <div class="tech-item">Vite Build Tool</div>
+            <div class="tech-item">Tailwind CSS</div>
+            <div class="tech-item">React Router v7</div>
+            <div class="tech-item">TanStack React Query</div>
+            <div class="tech-item">Axios HTTP Client</div>
+        </div>
+        <div>
+            <h4>Backend</h4>
+            <div class="tech-item">Node.js with Express</div>
+            <div class="tech-item">MySQL Database</div>
+            <div class="tech-item">JWT Authentication</div>
+            <div class="tech-item">Bcryptjs Security</div>
+            <div class="tech-item">Swagger API Docs</div>
+            <div class="tech-item">Multer File Upload</div>
+        </div>
+    </div>
+    <div style="margin-top: 40px; max-width: 900px;">
+        <p style="font-size: 16px; color: #666; text-align: center;">
+            <strong>Architecture:</strong> Full-stack web application with RESTful API, real-time inventory updates, secure authentication, and scalable database design
+        </p>
+    </div>
+    <div class="slide-number">5</div>
+</div>
+
+<!-- Slide 6: Key Modules -->
+<div class="slide slide-content">
+    <h2>System Modules</h2>
+    <div style="display: flex; gap: 40px; max-width: 1100px; width: 100%;">
+        <div style="flex: 1;">
+            <div class="key-feature">
+                <div class="feature-number">1</div>
+                <div class="feature-text">
+                    <h4>Authentication & Users</h4>
+                    <p>Secure login system with role-based access control</p>
+                </div>
+            </div>
+            <div class="key-feature">
+                <div class="feature-number">2</div>
+                <div class="feature-text">
+                    <h4>Inventory System</h4>
+                    <p>Stock tracking with alerts and usage monitoring</p>
+                </div>
+            </div>
+            <div class="key-feature">
+                <div class="feature-number">3</div>
+                <div class="feature-text">
+                    <h4>Menu & Orders</h4>
+                    <p>Menu creation and order processing workflow</p>
+                </div>
+            </div>
+        </div>
+        <div style="flex: 1;">
+            <div class="key-feature">
+                <div class="feature-number">4</div>
+                <div class="feature-text">
+                    <h4>Staff Management</h4>
+                    <p>Attendance and role-based permissions</p>
+                </div>
+            </div>
+            <div class="key-feature">
+                <div class="feature-number">5</div>
+                <div class="feature-text">
+                    <h4>Supplier & Procurement</h4>
+                    <p>Vendor management and purchase orders</p>
+                </div>
+            </div>
+            <div class="key-feature">
+                <div class="feature-number">6</div>
+                <div class="feature-text">
+                    <h4>Analytics & Reports</h4>
+                    <p>Sales reports and business insights</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="slide-number">6</div>
+</div>
+
+<!-- Slide 7: Benefits -->
+<div class="slide slide-content">
+    <h2>Business Benefits</h2>
+    <div style="max-width: 900px; width: 100%;">
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+            <div class="content-item">
+                <h4>💰 Cost Reduction</h4>
+                <ul style="margin-top: 10px; list-style: none;">
+                    <li style="padding: 5px 0;">• Minimize food waste</li>
+                    <li style="padding: 5px 0;">• Optimize inventory</li>
+                    <li style="padding: 5px 0;">• Reduce labor inefficiency</li>
+                </ul>
+            </div>
+            <div class="content-item">
+                <h4>⚡ Operational Efficiency</h4>
+                <ul style="margin-top: 10px; list-style: none;">
+                    <li style="padding: 5px 0;">• Faster order processing</li>
+                    <li style="padding: 5px 0;">• Real-time inventory</li>
+                    <li style="padding: 5px 0;">• Automated workflows</li>
+                </ul>
+            </div>
+            <div class="content-item">
+                <h4>📊 Data Intelligence</h4>
+                <ul style="margin-top: 10px; list-style: none;">
+                    <li style="padding: 5px 0;">• Sales analytics</li>
+                    <li style="padding: 5px 0;">• Trend analysis</li>
+                    <li style="padding: 5px 0;">• Business insights</li>
+                </ul>
+            </div>
+            <div class="content-item">
+                <h4>👥 User Experience</h4>
+                <ul style="margin-top: 10px; list-style: none;">
+                    <li style="padding: 5px 0;">• Easy to use interface</li>
+                    <li style="padding: 5px 0;">• Mobile responsive</li>
+                    <li style="padding: 5px 0;">• Quick training</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="slide-number">7</div>
+</div>
+
+<!-- Slide 8: Implementation -->
+<div class="slide slide-content">
+    <h2>System Implementation</h2>
+    <div style="max-width: 1000px; width: 100%;">
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 30px; margin-top: 30px;">
+            <div class="content-item">
+                <h4>Database Design</h4>
+                <p>Relational MySQL database with optimized schemas for users, inventory, orders, menus, suppliers, and sales tracking. Includes proper indexing for performance.</p>
+            </div>
+            <div class="content-item">
+                <h4>API Architecture</h4>
+                <p>RESTful API with comprehensive endpoints for all modules. Built with Express.js middleware, JWT authentication, and request validation.</p>
+            </div>
+            <div class="content-item">
+                <h4>Frontend Design</h4>
+                <p>Responsive React components with Tailwind CSS styling. Role-based UI that adapts to different user types and their specific needs.</p>
+            </div>
+            <div class="content-item">
+                <h4>Security Measures</h4>
+                <p>Password hashing, JWT tokens, CORS protection, and role-based access control. Secure file upload handling and input validation.</p>
+            </div>
+        </div>
+    </div>
+    <div class="slide-number">8</div>
+</div>
+
+<!-- Slide 9: Sustainability Focus -->
+<div class="slide slide-dark">
+    <h2>Sustainability Impact</h2>
+    <div style="max-width: 1000px; width: 100%;">
+        <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 25px; margin-top: 30px;">
+            <div class="content-item">
+                <h4 style="color: #2a5298;">♻️ Waste Reduction</h4>
+                <p>Precise inventory tracking and usage monitoring help reduce food waste significantly.</p>
+            </div>
+            <div class="content-item">
+                <h4 style="color: #2a5298;">🌱 Resource Efficiency</h4>
+                <p>Optimize supply ordering based on data-driven insights and actual consumption patterns.</p>
+            </div>
+            <div class="content-item">
+                <h4 style="color: #2a5298;">📱 Digital Solution</h4>
+                <p>Paperless operations reduce environmental impact while improving efficiency.</p>
+            </div>
+        </div>
+    </div>
+    <div class="slide-number">9</div>
+</div>
+
+<!-- Slide 10: Conclusion -->
+<div class="slide slide-title">
+    <div style="text-align: center; max-width: 800px;">
+        <h1 style="font-size: 56px; margin-bottom: 40px;">Key Takeaways</h1>
+        <div style="font-size: 20px; text-align: left; background: rgba(255, 255, 255, 0.1); padding: 30px; border-radius: 8px;">
+            <p style="margin-bottom: 20px;">✓ Comprehensive cafeteria management solution</p>
+            <p style="margin-bottom: 20px;">✓ Role-based access for different user types</p>
+            <p style="margin-bottom: 20px;">✓ Real-time inventory and sales tracking</p>
+            <p style="margin-bottom: 20px;">✓ Cost reduction and waste minimization</p>
+            <p>✓ Modern, scalable technology architecture</p>
+        </div>
+    </div>
+    <div class="slide-number">10</div>
+</div>
+
+<!-- Slide 11: Thank You -->
+<div class="slide slide-title">
+    <div class="title-content">
+        <h1 style="font-size: 72px; margin-bottom: 60px;">Thank You</h1>
+        <p style="font-size: 24px; margin-bottom: 40px;">Questions & Discussion</p>
+        <p style="font-size: 18px; opacity: 0.8;">SustCafeteria: Smart Management for Modern Cafeterias</p>
+    </div>
+    <div class="slide-number">11</div>
+</div>
+
+<!-- Controls -->
+<div class="controls">
+    <button class="btn-prev" onclick="previousSlide()">← Previous</button>
+    <button class="btn-print" onclick="printPresentation()">🖨️ Print to PDF</button>
+    <button class="btn-next" onclick="nextSlide()">Next →</button>
+</div>
+
+<div class="slide-indicator">
+    <span id="current-slide">1</span> / <span id="total-slides">11</span>
+</div>
+
+<script>
+    let currentSlide = 0;
+    const slides = document.querySelectorAll('.slide');
+    const totalSlides = slides.length;
+
+    document.getElementById('total-slides').textContent = totalSlides;
+
+    function showSlide(n) {
+        slides[currentSlide].classList.remove('active');
+        currentSlide = (n + totalSlides) % totalSlides;
+        slides[currentSlide].classList.add('active');
+        document.getElementById('current-slide').textContent = currentSlide + 1;
+    }
+
+    function nextSlide() {
+        showSlide(currentSlide + 1);
+    }
+
+    function previousSlide() {
+        showSlide(currentSlide - 1);
+    }
+
+    function printPresentation() {
+        window.print();
+    }
+
+    // Keyboard navigation
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'ArrowRight') nextSlide();
+        if (e.key === 'ArrowLeft') previousSlide();
+    });
+</script>
+
+</body>
+</html>
