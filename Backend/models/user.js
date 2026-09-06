@@ -2,6 +2,7 @@ import { db } from "../config/db.js";
 
 // roles = ['NORMAL', 'ADMIN']
 export const createUserTable = async () => {
+
     const query = `
         CREATE TABLE IF NOT EXISTS users (
             id INT AUTO_INCREMENT PRIMARY KEY,
@@ -65,6 +66,19 @@ export const deleteAllUsersExcept = async (id) => {
 };
 
 export const updateUserById = async (id, fields) => {
+    const keys = Object.keys(fields);
+    if (keys.length === 0) return false;
+
+    const setClause = keys.map(key => `${key} = ?`).join(", ");
+    const values = keys.map(key => fields[key]);
+
+    const query = `UPDATE users SET ${setClause} WHERE id = ?`;
+    const [result] = await db.execute(query, [...values, id]);
+
+    return result.affectedRows > 0;
+};
+
+export const updateUserDB = async (id, fields) => {
     const keys = Object.keys(fields);
     if (keys.length === 0) return false;
 
